@@ -1,0 +1,43 @@
+<span data-bind="if: job.executions().length>1">
+    <div data-bind="jqSparkline: job.durationTimes,
+                    numberFormatter: job.durationNumberFormatter,
+                    sparklineClick: job.sparklineClickHandler,
+                    sparklineHover: job.sparklineHoverHandler,
+                    sparklineUnhover: job.sparklineUnhoverHandler,
+                    barColorMap: job.barColorMap,
+                    showBarColor: dash.graphOptions().showNormal,
+                    showNormal: dash.graphOptions().showNormal,
+                    normalRangeMin: job.normalRangeMin,
+                    normalRangeMax: job.normalRangeMax,
+                    valueSpots: { '0:':'blue' }"
+         sparkBarColor="#999"
+         sparkDisableTooltips="true"
+         sparkDrawNormalOnTop="false"
+         sparkWidth="100%"
+         sparkHeight="4em"
+         sparkType="bar"
+         sparkBarWidth="20"
+         sparkBarSpacing="10"
+         sparkDefaultPixelsPerValue="5"
+         sparkSpotColor="#0000ff"
+         sparkMinSpotColor="#444"
+         sparkMaxSpotColor="#fff"
+         sparkSpotRadius="5"
+         sparkLineWidth="2"
+         sparkLineColor="#444"
+         sparkFillColor="#aaf"
+         sparkTooltipClassname="jqssparktooltip"
+    ></div>
+</span>
+
+<span data-bind="if: job.executions().length>0">
+        <span data-bind="foreach: job.executions" class="joblist-executions">
+            <span class="joblist-execution-status-link"
+                  data-bind="component: {name: 'ui-joblist-execution-status-link',params: {execution: $data } }"></span>
+        </span>
+    <div class="text-muted" data-bind="if: dash.graphShowHelpText">
+        <span data-bind="uijoblistPluginMessageTemplate: '@name@', messageArgs: dash.graphOptions().queryMax, messageKey: 'graph.help.text'">
+        Duration of the last {0} executions of this Job. Click on a point to view the execution.
+        </span>
+    </div>
+</span>

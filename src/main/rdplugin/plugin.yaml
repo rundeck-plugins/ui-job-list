@@ -1,0 +1,25 @@
+name: ui-job-list
+rundeckPluginVersion: 2.0
+author: Rundeck Dev
+description: Describe your plugin here
+rundeckCompatibilityVersion: 3.x
+targetHostCompatibility: unix
+license: Apache 2.0
+tags:
+    - script
+    - UI
+date: 2019-06-11T19:50:16.097Z
+version: 1.0.0
+providers:
+    - name: ui-job-list
+      service: UI
+      plugin-type: ui
+      title: ui-job-list
+      description: The description of your plugin
+      ui:
+        - pages: '*'
+          scripts:
+            - js/init.js
+            - js/joblist.js
+          styles:
+            - css/joblist.css

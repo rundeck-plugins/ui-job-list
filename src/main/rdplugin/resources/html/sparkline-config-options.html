@@ -1,0 +1,53 @@
+<div class="dropdown dropdown-form " >
+    <a href="#" class="dropdown-toggle btn btn-simple btn-muted" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+        %%Options%%
+        <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu " data-click-stop-propagation>
+        <li role="presentation" class="dropdown-header">
+            %%Display Options%%
+        </li>
+        <li  class=" form-item">
+
+            <div class="checkbox">
+                <input type="checkbox" data-bind="checked: dash.graphOptions().showNormal" class="checkbox" id="_dash_graphOptions_showNormal">
+                <label for="_dash_graphOptions_showNormal">
+                    %%Colorize Normal Range%%
+                </label>
+            </div>
+
+            <!-- ko if: dash.graphOptions().showNormal -->
+            <div class="form-inline">
+                <div class=" radio" >
+                    <input type=radio value="Average" name="normalOption" data-bind="checked: dash.graphOptions().normalOption" id="_dash_graphOptions_normalOption_average">
+                    <label for="_dash_graphOptions_normalOption_average">
+                        %%range.average%%
+                    </label>
+                </div>
+
+                <div class=" radio" >
+                    <input type=radio value="10%" name="normalOption" data-bind="checked: dash.graphOptions().normalOption" id="_dash_graphOptions_normalOption_10">
+                    <label for="_dash_graphOptions_normalOption_10">
+                        %%range.10%%
+                    </label>
+                </div>
+            </div>
+            <!-- /ko -->
+
+            <div  class="checkbox">
+                <input type="checkbox" data-bind="checked: dash.graphOptions().normalSuccessOnly" id="_dash_graphOptions_normalSuccessOnly">
+                <label for="_dash_graphOptions_normalSuccessOnly">
+                    %%Average only Successful executions%%
+                </label>
+            </div>
+            <div  class="form-inline">
+
+                <input type="number" data-bind="value: dash.graphOptions().queryMax" class="form-control" style="width: 4em" id="_dash_graphOptions_queryMax">
+                <label for="_dash_graphOptions_queryMax">
+                    %%Executions%%
+                </label>
+            </div>
+        </li>
+    </ul>
+
+</div>

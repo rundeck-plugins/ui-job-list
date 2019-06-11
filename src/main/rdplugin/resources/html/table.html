@@ -1,0 +1,150 @@
+<div>
+    <div class="">
+        <a style="margin-bottom:1em;" class="btn btn-default btn-xs pull-right" data-toggle="modal" href="#joblistViewOptions">
+            %%View Options%%
+            <i class="glyphicon glyphicon-cog"></i>
+        </a>
+
+        <div class="modal fade" id="joblistViewOptions" role="dialog" aria-labelledby="joblistViewOptionsModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="joblistViewOptionsModalLabel">%%Dashboard View Options%%</h4>
+                    </div>
+
+                    <div class="modal-body container form form-horizontal">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">%%Forecast%%: </label>
+                            <div class="col-sm-10 form-inline">
+                                <label>
+                                    <input type="number" data-bind="value: joblist.graphOptions().queryMax" class="form-control">
+                                    %%Executions%%
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">%%Durations%%: </label>
+                            <div class="col-sm-10">
+                                <div class="checkbox checkbox-inline">
+                                  <input id="showGraphOption" type="checkbox" data-bind="checked: joblist.graphOptions().showNormal">
+                                  <label for="showGraphOption">
+                                      %%Colorize Normal Range%%
+                                  </label>
+                                </div>
+
+                                <div data-bind="if: joblist.graphOptions().showNormal()">
+                                    <div class=" radio radio-inline">
+                                        <input type=radio value="Average" name="normalOption"
+                                               data-bind="checked: joblist.graphOptions().normalOption"
+                                               id="_joblist_graphOptions_normalOption_average">
+                                        <label for="_joblist_graphOptions_normalOption_average">
+                                            %%range.average%%
+                                        </label>
+                                    </div>
+
+                                    <div class=" radio radio-inline">
+                                        <input type=radio value="10%" name="normalOption"
+                                               data-bind="checked: joblist.graphOptions().normalOption"
+                                               id="_joblist_graphOptions_normalOption_10">
+                                        <label for="_joblist_graphOptions_normalOption_10">
+                                            %%range.10%%
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-sm-10 col-sm-offset-2">
+                              <div class="checkbox">
+                                <input id="graphOptionsNormalSuccessOnly" type="checkbox" data-bind="checked: joblist.graphOptions().normalSuccessOnly">
+                                <label for="graphOptionsNormalSuccessOnly">
+                                    %%Average only Successful executions%%
+                                </label>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">%%Close%%</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <table class="table table-bordered table-hover table-compact">
+        <tbody>
+        <tr>
+            <th class=" text-center h5 text-header">%%Name%%</th>
+            <th class=" text-center h5 text-header">%%Group%%</th>
+            <th colspan="3" class=" text-center h5 text-header">%%Executions%%</th>
+            <th class=" text-center h5 text-header">
+                %%Scheduled%% <i class="glyphicon glyphicon-play "></i></th>
+            <th class=" text-center h5 text-header">%%Action%%</th>
+        </tr>
+        </tbody>
+        <tbody data-bind="foreach: joblist.jobsListed">
+        <tr>
+            <td>
+                <span data-bind="if: $root.hasJobFavorites">
+                    <span data-bind="if: jobFav()!=null">
+                        <span data-bind="with: jobFav">
+                            <span class=" action"
+                                  data-bind="css: favCss, attr: favAttrs, click: toggleFav">
+                                <i class="glyphicon " data-bind="css: favIcon"></i>
+                                </span>
+                        </span>
+                    </span>
+                </span>
+                <span data-bind="if: href()">
+                    <a href="#"
+                       data-bind="text: name, attr: {href: href, title: statusText}, css: status, bootstrapTooltip: statusText"></a>
+                </span>
+                <span data-bind="if: !href()">
+                    <span href="#" data-bind="text: name, css: status, bootstrapTooltip: statusText"></span>
+                </span>
+            </td>
+            <td data-bind="text: group"></td>
+            <td>
+                <!-- running info -->
+                <span data-bind="foreach: nowrunning">
+                    <ui-joblist-execution-status-link params="execution: $data"></ui-joblist-execution-status-link>
+
+                </span>
+                <!-- scheduled info -->
+                <span data-bind="foreach: scheduled">
+                    <ui-joblist-execution-status-link params="execution: $data"></ui-joblist-execution-status-link>
+                </span>
+            </td>
+            <td style="vertical-align: middle;">
+
+                <ui-joblist-job-forecast-icon params="job: $data"></ui-joblist-job-forecast-icon>
+            </td>
+            <td>
+                <ui-joblist-job-sparkline params="job:$data, dash:$root"></ui-joblist-job-sparkline>
+                <!-- ko if: $data.total() > 0 -->
+                <span class="" data-bind="uijoblistPluginMessageTemplate: '@name@', messageArgs: [$data.executions().length,$data.total],
+                messageKey: 'graph.info.text'">
+                {0} of {1} total
+                </span>
+                <!-- /ko -->
+            </td>
+            <td>
+                <span data-bind="if: nextExecutionW3CTime">
+                    %%in%% <span class="text-info" data-bind="text: nextExecutionDuration"></span>
+                    %%at%% <span class="" data-bind="text: nextExecutionRelative"></span>
+                </span>
+            </td>
+            <td>
+                <span data-bind="if: runhref()">
+                    <a href="#" data-bind="attr: {href: runhref, 'data-job-id': id}"
+                       class="btn btn-xs btn-default act_execute_job pull-right">
+                        <i class="glyphicon glyphicon-play"></i>
+                        %%Run%%
+                    </a>
+                </span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
