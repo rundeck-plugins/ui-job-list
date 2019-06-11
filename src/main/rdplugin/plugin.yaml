@@ -1,21 +1,24 @@
 name: ui-job-list
+display: Job List View
 rundeckPluginVersion: 2.0
-author: Rundeck Dev
-description: Describe your plugin here
+author: Greg Schueler
+description: Table list view of Jobs with statistics
 rundeckCompatibilityVersion: 3.x
 targetHostCompatibility: unix
 license: Apache 2.0
+sourceLink: https://github.com/rundeck-plugins/ui-job-list
+docsLink: https://github.com/rundeck-plugins/ui-job-list
 tags:
     - script
     - UI
 date: 2019-06-11T19:50:16.097Z
-version: 1.0.0
+version: 0.2.0
 providers:
     - name: ui-job-list
       service: UI
       plugin-type: ui
       title: ui-job-list
-      description: The description of your plugin
+      description: Table list view of Jobs with statistics
       ui:
         - pages: '*'
           scripts:
