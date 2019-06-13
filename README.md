@@ -6,7 +6,7 @@ This is a Rundeck UI plugin that shows a table list view of Rundeck jobs with st
 
 Using gradle:
 ```
-gradle build
+./gradlew build
 ```
 
 ## Install
